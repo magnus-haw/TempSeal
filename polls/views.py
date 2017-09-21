@@ -3,8 +3,8 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
 
-from .models import Choice, Question
-
+from .models import Choice, Question, SingleResponse
+from .forms import ResponseForm
 
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
@@ -24,6 +24,10 @@ class ResultsView(generic.DetailView):
     model = Question
     template_name = 'polls/results.html'
 
+class FormView(generic.DetailView):
+    model = SingleResponse
+    template_name = 'polls/form.html'
+
 
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
@@ -42,3 +46,17 @@ def vote(request, question_id):
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+
+def post_new(request):
+    if request.method == "POST":
+        # create a form instance and populate it with data from the request:
+        form = ResponseForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            post = form.save()
+            # redirect to a new URL:
+            return HttpResponseRedirect('/thanks/')
+    else:
+        form = ResponseForm()
+    return render(request, 'polls/form.html', {'form': form})
