@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse,HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
 
@@ -47,6 +47,9 @@ def vote(request, question_id):
         # user hits the Back button.
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
+def thanks(request):
+    return HttpResponse("Thanks!")
+
 def post_new(request):
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
@@ -56,7 +59,7 @@ def post_new(request):
             # process the data in form.cleaned_data as required
             post = form.save()
             # redirect to a new URL:
-            return HttpResponseRedirect('/thanks/')
+            return HttpResponseRedirect('thanks/')
     else:
         form = ResponseForm()
     return render(request, 'polls/form.html', {'form': form})
