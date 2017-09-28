@@ -50,7 +50,7 @@ class SingleResponse(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     student_ID= models.CharField(max_length=12)
     building = models.ForeignKey(Building, on_delete=models.CASCADE)
-    room = models.IntegerField()
+    room = models.PositiveIntegerField()
     temp = models.IntegerField(choices=TEMPS,default=JUSTRIGHT)   
 
 

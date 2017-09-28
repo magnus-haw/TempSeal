@@ -1,0 +1,14 @@
+h1 {
+    color: lightseagreen;
+    font-family: 'Lobster';
+}
+
+body {
+    padding-left: 25px;
+    background: white url("images/bg-circles.jpeg") no-repeat left top;
+}
+
+.post-form label {
+    color: lightseagreen;
+    font-family: 'Lobster';
+}
