@@ -8,7 +8,6 @@ from django.contrib import admin
 from .models import Question,Choice,SingleResponse,Building
 admin.site.register(Choice)
 admin.site.register(Question)
-admin.site.register(Building)
 
 class SingleResponseAdmin(admin.ModelAdmin):
     list_display =('timestamp','student_ID','building','room','temp')
@@ -16,3 +15,9 @@ class SingleResponseAdmin(admin.ModelAdmin):
     search_fields = ['building__name','student_ID']
 
 admin.site.register(SingleResponse,SingleResponseAdmin)
+
+class BuildingAdmin(admin.ModelAdmin):
+    list_display =('name','abbrv','latitude','longitude')
+    search_fields = ['name','latitude','longitude']
+
+admin.site.register(Building,BuildingAdmin)
