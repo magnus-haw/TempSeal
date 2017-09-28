@@ -45,6 +45,8 @@ class Building(models.Model):
     
     def __str__(self):
         return self.name
+    class Meta:
+        ordering = ['name']
 
 class SingleResponse(models.Model):    
     timestamp = models.DateTimeField(auto_now_add=True)
