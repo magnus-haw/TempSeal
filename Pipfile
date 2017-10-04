@@ -9,6 +9,8 @@ psycopg2 = "*"
 whitenoise = "*"
 Django = "*"
 requests = "*"
+django-leaflet = "*"
+django-geojson = "*"
 
 [requires]
 python_version = "3.6"
