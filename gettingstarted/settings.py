@@ -148,3 +148,6 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 LEAFLET_CONFIG = {
     'SPATIAL_EXTENT': (-118.1278, 34.136, -118.123, 34.140)
 }
+
+#GEOS_LIBRARY_PATH = '/app/.geodjango/geos/lib/libgeos_c.so'
+#GDAL_LIBRARY_PATH = '/app/.geodjango/gdal/lib/libgdal.so'
