@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "0ad92c06aec2b672edd608996be3bcbb197bd1587a3658cb7c86ea0ad0a2c9e8"
+            "sha256": "f4e700aca70fd343a1d2297bb5314fae3335a54fcf8182fabbc15849a936bf44"
         },
         "requires": {
             "python_version": "3.6"
@@ -24,13 +24,28 @@
             "version": "==0.4.2"
         },
         "django": {
-            "version": "==1.11.5"
+            "version": "==1.11.6"
+        },
+        "django-geojson": {
+            "version": "==2.10.0"
+        },
+        "django-leaflet": {
+            "version": "==0.22.0"
         },
         "gunicorn": {
             "version": "==19.7.1"
         },
         "idna": {
             "version": "==2.6"
+        },
+        "jsonfield": {
+            "version": "==2.0.2"
+        },
+        "olefile": {
+            "version": "==0.44"
+        },
+        "pillow": {
+            "version": "==4.3.0"
         },
         "psycopg2": {
             "version": "==2.7.3.1"
@@ -40,6 +55,9 @@
         },
         "requests": {
             "version": "==2.18.4"
+        },
+        "six": {
+            "version": "==1.11.0"
         },
         "urllib3": {
             "version": "==1.22"
