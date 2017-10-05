@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
+from leaflet.admin import LeafletGeoAdmin
 
 # Register your models here.
 
@@ -16,7 +17,7 @@ class SingleResponseAdmin(admin.ModelAdmin):
 
 admin.site.register(SingleResponse,SingleResponseAdmin)
 
-class BuildingAdmin(admin.ModelAdmin):
+class BuildingAdmin(LeafletGeoAdmin):
     list_display =('name','abbrv','latitude','longitude')
     search_fields = ['name','latitude','longitude']
 

@@ -3,6 +3,7 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils import timezone
 from django.forms import ModelForm
+from djgeojson.fields import PointField,PolygonField
 
 # Create your models here.
 
@@ -42,7 +43,7 @@ class Building(models.Model):
     abbrv = models.CharField(max_length=10)
     latitude = models.FloatField()
     longitude = models.FloatField()
-    
+    geom = PointField() 
     def __str__(self):
         return self.name
     class Meta:
