@@ -62,3 +62,21 @@ def post_new(request):
     else:
         form = ResponseForm()
     return render(request, 'polls/form.html', {'form': form})
+
+def plot_building(request,building_name):
+    from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+    from matplotlib.figure import Figure
+
+    srlist = SingleResponse.objects.filter(building__name=building_name)
+    fig=Figure()
+    ax=fig.add_subplot(111)
+    x=[]
+    y=[]
+    for i in range(0,len(srlist)):
+        x.append(srlist[i].temp)
+    ax.hist(x)
+    #fig.ylabel('Count')
+    canvas=FigureCanvas(fig)
+    response=HttpResponse(content_type='image/png')
+    canvas.print_png(response)
+    return response
