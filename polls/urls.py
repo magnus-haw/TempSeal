@@ -16,7 +16,7 @@ urlpatterns = [
     url(r'^(?P<question_id>[0-9]+)/vote/$', views.vote, name='vote'),
     url(r'^post/$',views.post_new,name='post_new'),
     url(r'^post/thanks/$',views.thanks,name='thanks'),
-    url(r'^$', TemplateView.as_view(template_name='polls/map.html'), name='index'),
+    url(r'^$', views.IndexView.as_view(template_name='polls/map.html'), name='index'),
     url(r'^(?P<building_name>\w+)/results/$', views.plot_building, name='results'),
-    url(r'^data.geojson$', GeoJSONLayerView.as_view(model=Building, properties=('name')), name='data'),
+    url(r'^data.geojson$', GeoJSONLayerView.as_view(model=Building, properties=('name','latitude')), name='data'),
 ]

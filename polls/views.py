@@ -9,11 +9,16 @@ from .forms import ResponseForm
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
     context_object_name = 'latest_question_list'
+    form = ResponseForm() 
 
     def get_queryset(self):
         """Return the last five published questions."""
         return Question.objects.order_by('-pub_date')[:5]
 
+    def get_context_data(self, **kwargs):
+        context = super(IndexView, self).get_context_data(**kwargs) # get the default context data
+        context['form'] = self.form
+        return context
 
 class DetailView(generic.DetailView):
     model = Question

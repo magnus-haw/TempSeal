@@ -1,5 +1,6 @@
 import datetime
 from django.db import models
+from django.db.models import Count,Avg
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils import timezone
 from django.forms import ModelForm
@@ -44,6 +45,13 @@ class Building(models.Model):
     latitude = models.FloatField()
     longitude = models.FloatField()
     geom = PointField() 
+
+    def avg_temp(self):
+        "get average from SingleResponses"
+        q=SingleResponse.objects.filter(building__name = self.name)
+        average_temp = q.aggregate(Avg('temp'))
+        return average_temp['temp_avg'] 
+    
     def __str__(self):
         return self.name
     class Meta:
