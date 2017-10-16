@@ -45,12 +45,16 @@ class Building(models.Model):
     latitude = models.FloatField()
     longitude = models.FloatField()
     geom = PointField() 
+    temp = models.FloatField(default=JUSTRIGHT)
 
     def avg_temp(self):
         "get average from SingleResponses"
         q=SingleResponse.objects.filter(building__name = self.name)
-        average_temp = q.aggregate(Avg('temp'))
-        return average_temp['temp_avg'] 
+        average_temp = q.aggregate(Avg('temp'))['temp__avg']
+        if average_temp != None:
+            self.temp = int(average_temp)
+            self.save()
+        return average_temp
     
     def __str__(self):
         return self.name

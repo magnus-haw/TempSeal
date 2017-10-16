@@ -3,7 +3,7 @@ from django.http import HttpResponse,HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
 
-from .models import Choice, Question, SingleResponse
+from .models import Building, Choice, Question, SingleResponse
 from .forms import ResponseForm
 
 class IndexView(generic.ListView):
@@ -62,6 +62,8 @@ def post_new(request):
         if form.is_valid():
             # process the data in form.cleaned_data as required
             post = form.save()
+            bname = form.cleaned_data['building']
+            bname.avg_temp()
             # redirect to a new URL:
             return HttpResponseRedirect('thanks/')
     else:
