@@ -11,62 +11,11 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <style>
-      .leaflet-container { height: 100%; }
+      .leaflet-container { height: 80%; }
     </style>
-    <script type="text/javascript">
-      var dataurl = '{% url "data" %}';
-
-      function onEachFeature(feature, layer) {
-                                var props = feature.properties;
-                                var content = `<h3>${props.name}</h3><p>${props.temp}</p>`;
-                                layer.bindPopup(content);
-                            }
-
-      function pointToLayer(feature, latlng) {
-                        var props = feature.properties;
-                        var mycolor;
-                        switch (props.temp) {
-                            case -2: 
-                                 mycolor = "#10788e";
-                                 break;
-                            case -1: 
-                                 mycolor =  "#5fc8e8";
-                                 break;
-                            case  0: 
-                                 mycolor = "#94bc46";
-                                 break;
-                            case  1: 
-                                 mycolor = "#ef8e27";
-                                 break;
-                            case  2: 
-                                 mycolor =  "#ec5a29";
-                                 break; 
-                            default: mycolor="#94bc46";
-                        }; 
-			return L.circleMarker(latlng, {
-				radius: 8,
-                                fillColor: mycolor,
-                                color: "#000",
-				weight: 1,
-				opacity: 1,
-				fillOpacity: 0.8
-			});
-		}
-
-      window.addEventListener("map:init", function (event) {
-        var map = event.detail.map;
-        // Download GeoJSON data with Ajax
-        fetch(dataurl)
-          .then(function(resp) {
-            return resp.json();
-          })
-          .then(function(data) {
-            L.geoJson(data, {  onEachFeature: onEachFeature,
-                               pointToLayer: pointToLayer
-                            }).addTo(map);
-          });
-      });
-    </script>
+    <link rel="stylesheet" type="text/css" href="{% static 'polls/map.css' %}" />
+    <script src="{% static 'polls/map.js' %}" /></script>
+    
 
   </head>
   <body>
@@ -76,5 +25,8 @@
     <div class="modal fade" id="temp-form" tabindex="-1" role="dialog">{% include "polls/form-beta.html" %}</div>
 
     {% leaflet_map "main" %}
+    
   </body>
 </html>
+
+
