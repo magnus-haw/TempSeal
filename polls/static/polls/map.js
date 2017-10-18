@@ -75,6 +75,8 @@ window.addEventListener("map:init", function (event) {
     var map = event.detail.map;
     legend.addTo(map);
     logo.addTo(map);
+    map.options.maxZoom = 18;
+    map.options.minZoom = 16;
     // Download GeoJSON data with Ajax
     fetch(dataurl).then(function(resp) {
         return resp.json();
