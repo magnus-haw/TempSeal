@@ -18,7 +18,7 @@ function getColor(d) {
 //#################### POPUP CONTENT #########################
 function onEachFeature(feature, layer) {
                         var props = feature.properties;
-                        var content = `<h3>${props.name}</h3><p>${props.temp}</p>`;
+                        var content = `<h3>${props.name}</h3>`;
                         layer.bindPopup(content);
                     }
 

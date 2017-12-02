@@ -68,5 +68,3 @@ class SingleResponse(models.Model):
     room = models.PositiveIntegerField()
     temp = models.IntegerField(choices=TEMPS,default=JUSTRIGHT)   
 
-
-
