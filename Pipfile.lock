@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "f4e700aca70fd343a1d2297bb5314fae3335a54fcf8182fabbc15849a936bf44"
+            "sha256": "54cff731519a0ee586db4931779aac173ea0a1fd9a7b09f1329d9d092c68f8a1"
         },
         "requires": {
             "python_version": "3.6"
@@ -14,23 +14,29 @@
         ]
     },
     "default": {
+        "backports.functools-lru-cache": {
+            "version": "==1.4"
+        },
         "certifi": {
-            "version": "==2017.7.27.1"
+            "version": "==2017.11.5"
         },
         "chardet": {
             "version": "==3.0.4"
+        },
+        "cycler": {
+            "version": "==0.10.0"
         },
         "dj-database-url": {
             "version": "==0.4.2"
         },
         "django": {
-            "version": "==1.11.6"
+            "version": "==2.0"
         },
         "django-geojson": {
-            "version": "==2.10.0"
+            "version": "==2.11.0"
         },
         "django-leaflet": {
-            "version": "==0.22.0"
+            "version": "==0.23.0"
         },
         "gunicorn": {
             "version": "==19.7.1"
@@ -41,6 +47,12 @@
         "jsonfield": {
             "version": "==2.0.2"
         },
+        "matplotlib": {
+            "version": "==2.1.1"
+        },
+        "numpy": {
+            "version": "==1.13.3"
+        },
         "olefile": {
             "version": "==0.44"
         },
@@ -48,16 +60,25 @@
             "version": "==4.3.0"
         },
         "psycopg2": {
-            "version": "==2.7.3.1"
+            "version": "==2.7.3.2"
+        },
+        "pyparsing": {
+            "version": "==2.2.0"
+        },
+        "python-dateutil": {
+            "version": "==2.6.1"
         },
         "pytz": {
-            "version": "==2017.2"
+            "version": "==2017.3"
         },
         "requests": {
             "version": "==2.18.4"
         },
         "six": {
             "version": "==1.11.0"
+        },
+        "subprocess32": {
+            "version": "==3.2.7"
         },
         "urllib3": {
             "version": "==1.22"
