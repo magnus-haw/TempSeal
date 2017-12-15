@@ -18,7 +18,8 @@ function getColor(d) {
 //#################### POPUP CONTENT #########################
 function onEachFeature(feature, layer) {
                         var props = feature.properties;
-                        var content = `<h3>${props.name}</h3>`;
+                        var str = props.name.replace(/\s/g, "_");
+                        var content = `<a href="${str}/"><h3>${props.name}</h3></a>`;
                         layer.bindPopup(content);
                     }
 
@@ -45,8 +46,8 @@ var legend = L.control({position: 'topright'});
 legend.onAdd = function (map) {
 
 	var div = L.DomUtil.create('div', 'info legend'),
-		grades = [-2,-1,0,1,2],
-		labels = ['Cold','Cool','Just right','Warm','Hot'],
+		grades = [2,1,0,-1,-2],
+		labels = ['Hot','Warm','Just right','Cool','Cold'],
 		lines=[],
 		from, to;
 

@@ -24,33 +24,6 @@ class DetailView(generic.DetailView):
     model = Question
     template_name = 'polls/detail.html'
 
-
-class ResultsView(generic.DetailView):
-    model = Question
-    template_name = 'polls/results.html'
-
-class FormView(generic.DetailView):
-    model = SingleResponse
-    template_name = 'polls/form.html'
-
-def vote(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    try:
-        selected_choice = question.choice_set.get(pk=request.POST['choice'])
-    except (KeyError, Choice.DoesNotExist):
-        # Redisplay the question voting form.
-        return render(request, 'polls/detail.html', {
-            'question': question,
-            'error_message': "You didn't select a choice.",
-        })
-    else:
-        selected_choice.votes += 1
-        selected_choice.save()
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
-        return HttpResponseRedirect(reverse('results', args=(question.id,)))
-
 def thanks(request):
     return HttpResponse("Thanks!")
 
@@ -73,7 +46,8 @@ def post_new(request):
 def plot_building(request,building_name):
     from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
     from matplotlib.figure import Figure
-
+    import matplotlib.pylab as plt
+    building_name = building_name.replace('_',' ')
     srlist = SingleResponse.objects.filter(building__name=building_name)
     fig=Figure()
     ax=fig.add_subplot(111)
@@ -81,9 +55,17 @@ def plot_building(request,building_name):
     y=[]
     for i in range(0,len(srlist)):
         x.append(srlist[i].temp)
-    ax.hist(x)
-    #fig.ylabel('Count')
+    colors = ['#10788e','#5fc8e8','#94bc46','#ef8e27','#ec5a29','#ec5a29']
+    n,bins,patches = ax.hist(x,bins=[-2,-1,0,1,2,3])#,color=colors)
+    ax.set_xticks([-1.5,-.5,0.5,1.5,2.5])
+    ax.set_xticklabels(['Cold','Cool','Just Right','Warm', 'Hot'])
+    ax.set_ylabel('Count',fontsize=15)
+    ax.set_title(building_name+": votes", fontsize=20)
+    for p in range(0,5):
+        plt.setp(patches[p],'facecolor',colors[p])
+
     canvas=FigureCanvas(fig)
     response=HttpResponse(content_type='image/png')
     canvas.print_png(response)
     return response
+    #return render(request, 'polls/building.html',{'srlist':srlist})
