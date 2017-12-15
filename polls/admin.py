@@ -6,9 +6,7 @@ from leaflet.admin import LeafletGeoAdmin
 
 # Register your models here.
 
-from .models import Question,Choice,SingleResponse,Building
-admin.site.register(Choice)
-admin.site.register(Question)
+from .models import SingleResponse,Building
 
 class SingleResponseAdmin(admin.ModelAdmin):
     list_display =('timestamp','student_ID','building','room','temp')

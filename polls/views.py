@@ -3,7 +3,7 @@ from django.http import HttpResponse,HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
 
-from .models import Building, Choice, Question, SingleResponse
+from .models import Building, SingleResponse
 from .forms import ResponseForm
 
 class IndexView(generic.ListView):
@@ -19,10 +19,6 @@ class IndexView(generic.ListView):
         context = super(IndexView, self).get_context_data(**kwargs) # get the default context data
         context['form'] = self.form
         return context
-
-class DetailView(generic.DetailView):
-    model = Question
-    template_name = 'polls/detail.html'
 
 def thanks(request):
     return HttpResponse("Thanks!")
