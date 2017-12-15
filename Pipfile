@@ -12,7 +12,7 @@ django-leaflet = "*"
 django-geojson = "*"
 jsonfield = "*"
 matplotlib = "*"
-Django = "*"
+Django = "1.11"
 Pillow = "*"
 
 [requires]
