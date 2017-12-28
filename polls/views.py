@@ -39,7 +39,7 @@ def post_new(request):
         form = ResponseForm()
     return render(request, 'polls/form.html', {'form': form})
 
-def plot_building(request,building_name):
+def _plot_building(request,building_name):
     from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
     from matplotlib.figure import Figure
     import matplotlib.pylab as plt
@@ -64,4 +64,24 @@ def plot_building(request,building_name):
     response=HttpResponse(content_type='image/png')
     canvas.print_png(response)
     return response
-    #return render(request, 'polls/building.html',{'srlist':srlist})
+
+def plot_building(request,building_name):
+    building_name = building_name.replace('_',' ')
+    srlist = SingleResponse.objects.filter(building__name=building_name).order_by('-timestamp')
+    rooms = srlist.values('room').distinct()
+    num = len(srlist)
+    cold,cool,jr,warm,hot=0,0,0,0,0
+    for i in range(0,len(srlist)):
+        t= srlist[i].temp
+        if t== -2:
+            cold += 1
+        elif t== -1:
+            cool += 1
+        elif t== 0:
+            jr +=1
+        elif t== 1:
+            warm += 1
+        else:
+            hot +=1
+    temps = [cold,cool,jr,warm,hot]
+    return render(request, 'polls/building.html',{'building':building_name,'srlist':srlist,'temps':temps,'num':num,'rooms':rooms})

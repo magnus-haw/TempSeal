@@ -4,4 +4,4 @@ from .models import SingleResponse
 class ResponseForm(forms.ModelForm):
     class Meta:
         model = SingleResponse
-        fields = ['student_ID', 'building', 'room', 'temp']
+        fields = ['email', 'building', 'room', 'temp','comment']

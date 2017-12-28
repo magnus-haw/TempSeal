@@ -47,8 +47,8 @@ class Building(models.Model):
 
 class SingleResponse(models.Model):    
     timestamp = models.DateTimeField(auto_now_add=True)
-    student_ID= models.CharField(max_length=12)
+    email = models.EmailField()
     building = models.ForeignKey(Building, on_delete=models.CASCADE)
     room = models.PositiveIntegerField()
     temp = models.IntegerField(choices=TEMPS,default=JUSTRIGHT)   
-
+    comment = models.TextField(blank=True,null=True)

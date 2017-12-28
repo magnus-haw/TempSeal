@@ -9,9 +9,9 @@ from leaflet.admin import LeafletGeoAdmin
 from .models import SingleResponse,Building
 
 class SingleResponseAdmin(admin.ModelAdmin):
-    list_display =('timestamp','student_ID','building','room','temp')
+    list_display =('timestamp','email','building','room','temp')
     list_filter = ['timestamp']
-    search_fields = ['building__name','student_ID']
+    search_fields = ['building__name','email']
 
 admin.site.register(SingleResponse,SingleResponseAdmin)
 
