@@ -19,7 +19,7 @@ function getColor(d) {
 function onEachFeature(feature, layer) {
                         var props = feature.properties;
                         var str = props.name.replace(/\s/g, "_");
-                        var content = `<a href="${str}/"><h3>${props.name}</h3></a> <button class="btn btn-info btn-lg" type="button" data-toggle="modal" data-target="#temp-form">Submit Temp Feedback</button>`;
+                        var content = `<a href="${str}/"><h3>${props.name}</h3></a> <button class="btn btn-info btn-lg" type="button" data-toggle="modal" data-target="#temp-form" data-whatever="${feature.id}">Submit Temp Feedback</button>`;
                         layer.bindPopup(content);
                     }
 
@@ -86,10 +86,20 @@ window.addEventListener("map:init", function (event) {
     
         L.geoJson(data, {  
             onEachFeature: onEachFeature, //popup for each point
-            pointToLayer: pointToLayer //point properties (e.g. color)
+            pointToLayer: pointToLayer //point properties (e.g. colo)
         }).addTo(map);
         
     });
 });
 
 
+$(document).ready(function(){
+  $('#temp-form').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget); // Button that triggered the modal
+    var building = button.data('whatever'); // Extract info from data-* attributes
+    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+    var modal = $(this);
+    modal.find('#id_building').val(building);
+  })
+});
