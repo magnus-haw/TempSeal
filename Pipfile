@@ -11,6 +11,8 @@ django-leaflet = "*"
 django-geojson = "*"
 jsonfield = "*"
 Django = "*"
+Pillow = "*"
+six = "*"
 
 [requires]
 python_version = "3.6"

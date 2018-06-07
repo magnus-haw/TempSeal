@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "672068ef2a5066e124ff6b22ace691b3a0faf90a6400454d5a1153334d2657a8"
+            "sha256": "90a072d7c6818e958252f73dd36d163a690ee92d4bf727c0f18da430daca3bfe"
         },
         "requires": {
             "python_version": "3.6"
@@ -32,11 +32,17 @@
         "jsonfield": {
             "version": "==2.0.2"
         },
+        "pillow": {
+            "version": "==5.1.0"
+        },
         "psycopg2": {
             "version": "==2.7.4"
         },
         "pytz": {
             "version": "==2018.4"
+        },
+        "six": {
+            "version": "==1.11.0"
         },
         "whitenoise": {
             "version": "==3.3.1"
