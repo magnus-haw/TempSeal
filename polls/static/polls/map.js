@@ -19,7 +19,7 @@ function getColor(d) {
 function onEachFeature(feature, layer) {
                         var props = feature.properties;
                         var str = props.name.replace(/\s/g, "_");
-                        var content = `<a href="${str}/"><h3>${props.name}</h3></a>`;
+                        var content = `<a href="${str}/"><h3>${props.name}</h3></a> <button class="btn btn-info btn-lg" type="button" data-toggle="modal" data-target="#temp-form">Submit Temp Feedback</button>`;
                         layer.bindPopup(content);
                     }
 

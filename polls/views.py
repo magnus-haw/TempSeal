@@ -34,7 +34,7 @@ def post_new(request):
             bname = form.cleaned_data['building']
             bname.avg_temp()
             # redirect to a new URL:
-            return HttpResponseRedirect('thanks/')
+            return HttpResponseRedirect('/')
     else:
         form = ResponseForm()
     return render(request, 'polls/form.html', {'form': form})
