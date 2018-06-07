@@ -6,22 +6,22 @@ from django.views import generic
 from .models import Building, SingleResponse
 from .forms import ResponseForm, FoodForm
 
-class IndexView(generic.ListView):
-    template_name = 'polls/index.html'
-    context_object_name = 'latest_question_list'
-    form = ResponseForm() 
-
-    def get_queryset(self):
-        """Return the last five published questions."""
-        return Building.objects.order_by('-name')[:5]
-
-    def get_context_data(self, **kwargs):
-        context = super(IndexView, self).get_context_data(**kwargs) # get the default context data
-        context['form'] = self.form
-        return context
-
-def thanks(request):
-    return HttpResponse("Thanks!")
+##class IndexView(generic.ListView):
+##    template_name = 'polls/index.html'
+##    context_object_name = 'latest_question_list'
+##    form = ResponseForm() 
+##
+##    def get_queryset(self):
+##        """Return the last five published questions."""
+##        return Building.objects.order_by('-name')[:5]
+##
+##    def get_context_data(self, **kwargs):
+##        context = super(IndexView, self).get_context_data(**kwargs) # get the default context data
+##        context['form'] = self.form
+##        return context
+##
+##def thanks(request):
+##    return HttpResponse("Thanks!")
 
 def post_new(request):
     if request.method == "POST":
@@ -54,32 +54,6 @@ def post_new_food(request):
     else:
         form = FoodForm()
     return render(request, 'polls/form.html', {'form': form})
-
-def _plot_building(request,building_name):
-    from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
-    from matplotlib.figure import Figure
-    import matplotlib.pylab as plt
-    building_name = building_name.replace('_',' ')
-    srlist = SingleResponse.objects.filter(building__name=building_name)
-    fig=Figure()
-    ax=fig.add_subplot(111)
-    x=[]
-    y=[]
-    for i in range(0,len(srlist)):
-        x.append(srlist[i].temp)
-    colors = ['#10788e','#5fc8e8','#94bc46','#ef8e27','#ec5a29','#ec5a29']
-    n,bins,patches = ax.hist(x,bins=[-2,-1,0,1,2,3])#,color=colors)
-    ax.set_xticks([-1.5,-.5,0.5,1.5,2.5])
-    ax.set_xticklabels(['Cold','Cool','Just Right','Warm', 'Hot'])
-    ax.set_ylabel('Count',fontsize=15)
-    ax.set_title(building_name+": votes", fontsize=20)
-    for p in range(0,5):
-        plt.setp(patches[p],'facecolor',colors[p])
-
-    canvas=FigureCanvas(fig)
-    response=HttpResponse(content_type='image/png')
-    canvas.print_png(response)
-    return response
 
 def plot_building(request,building_name):
     building_name = building_name.replace('_',' ')

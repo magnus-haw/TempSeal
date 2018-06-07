@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "b3ac272af9c7eebe58bbbed3d9d832a85b59e7205a8a731f041915aafd1075ec"
+            "sha256": "672068ef2a5066e124ff6b22ace691b3a0faf90a6400454d5a1153334d2657a8"
         },
         "requires": {
             "python_version": "3.6"
@@ -14,23 +14,11 @@
         ]
     },
     "default": {
-        "backports.functools-lru-cache": {
-            "version": "==1.4"
-        },
-        "certifi": {
-            "version": "==2017.11.5"
-        },
-        "chardet": {
-            "version": "==3.0.4"
-        },
-        "cycler": {
-            "version": "==0.10.0"
-        },
         "dj-database-url": {
-            "version": "==0.4.2"
+            "version": "==0.5.0"
         },
         "django": {
-            "version": "==2.0"
+            "version": "==1.11.13"
         },
         "django-geojson": {
             "version": "==2.11.0"
@@ -39,49 +27,16 @@
             "version": "==0.23.0"
         },
         "gunicorn": {
-            "version": "==19.7.1"
-        },
-        "idna": {
-            "version": "==2.6"
+            "version": "==19.8.1"
         },
         "jsonfield": {
             "version": "==2.0.2"
         },
-        "matplotlib": {
-            "version": "==2.1.1"
-        },
-        "numpy": {
-            "version": "==1.13.3"
-        },
-        "olefile": {
-            "version": "==0.44"
-        },
-        "pillow": {
-            "version": "==4.3.0"
-        },
         "psycopg2": {
-            "version": "==2.7.3.2"
-        },
-        "pyparsing": {
-            "version": "==2.2.0"
-        },
-        "python-dateutil": {
-            "version": "==2.6.1"
+            "version": "==2.7.4"
         },
         "pytz": {
-            "version": "==2017.3"
-        },
-        "requests": {
-            "version": "==2.18.4"
-        },
-        "six": {
-            "version": "==1.11.0"
-        },
-        "subprocess32": {
-            "version": "==3.2.7"
-        },
-        "urllib3": {
-            "version": "==1.22"
+            "version": "==2018.4"
         },
         "whitenoise": {
             "version": "==3.3.1"
