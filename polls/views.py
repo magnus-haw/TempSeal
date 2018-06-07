@@ -6,19 +6,19 @@ from django.views import generic
 from .models import Building, SingleResponse
 from .forms import ResponseForm, FoodForm
 
-##class IndexView(generic.ListView):
-##    template_name = 'polls/index.html'
-##    context_object_name = 'latest_question_list'
-##    form = ResponseForm() 
-##
-##    def get_queryset(self):
-##        """Return the last five published questions."""
-##        return Building.objects.order_by('-name')[:5]
-##
-##    def get_context_data(self, **kwargs):
-##        context = super(IndexView, self).get_context_data(**kwargs) # get the default context data
-##        context['form'] = self.form
-##        return context
+class IndexView(generic.ListView):
+    template_name = 'polls/index.html'
+    context_object_name = 'latest_question_list'
+    form = ResponseForm() 
+
+    def get_queryset(self):
+        """Return the last five published questions."""
+        return Building.objects.order_by('-name')[:5]
+
+    def get_context_data(self, **kwargs):
+        context = super(IndexView, self).get_context_data(**kwargs) # get the default context data
+        context['form'] = self.form
+        return context
 ##
 ##def thanks(request):
 ##    return HttpResponse("Thanks!")
@@ -50,7 +50,7 @@ def post_new_food(request):
             bname = form.cleaned_data['building']
             bname.food()
             # redirect to a new URL:
-            return HttpResponseRedirect('thanks/')
+            return HttpResponseRedirect('/')
     else:
         form = FoodForm()
     return render(request, 'polls/form.html', {'form': form})
