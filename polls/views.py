@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.views import generic
 
 from .models import Building, SingleResponse
-from .forms import ResponseForm
+from .forms import ResponseForm, FoodForm
 
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
@@ -37,6 +37,22 @@ def post_new(request):
             return HttpResponseRedirect('/')
     else:
         form = ResponseForm()
+    return render(request, 'polls/form.html', {'form': form})
+
+def post_new_food(request):
+    if request.method == "POST":
+        # create a form instance and populate it with data from the request:
+        form = FoodForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            post = form.save()
+            bname = form.cleaned_data['building']
+            bname.food()
+            # redirect to a new URL:
+            return HttpResponseRedirect('thanks/')
+    else:
+        form = FoodForm()
     return render(request, 'polls/form.html', {'form': form})
 
 def _plot_building(request,building_name):

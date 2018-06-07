@@ -7,13 +7,13 @@ var COOL = "#5fc8e8";
 var COLD = "#10788e";
 
 function getColor(d) {
-		return d > 1 ? HOT :
-				d > 0  ? WARM :
-				d > -1  ? JUSTRIGHT :
-				d > -2  ? COOL :
-				d > -3   ? COLD :
-							JUSTRIGHT;
-	}
+        return d > 1 ? HOT :
+               d > 0  ? WARM :
+               d > -1  ? JUSTRIGHT :
+               d > -2  ? COOL :
+               d > -3   ? COLD :
+                            JUSTRIGHT;
+    }
 
 //#################### POPUP CONTENT #########################
 function onEachFeature(feature, layer) {
@@ -45,21 +45,22 @@ document.getElementById("weather").innerHTML= (o.main.temp-273.15).toFixed(2) +'
 var legend = L.control({position: 'topright'});
 legend.onAdd = function (map) {
 
-	var div = L.DomUtil.create('div', 'info legend'),
-		grades = [2,1,0,-1,-2],
-		labels = ['Hot','Warm','Just right','Cool','Cold'],
-		lines=[],
-		from, to;
+    var div = L.DomUtil.create('div', 'info legend'),
+        grades = [2,1,0,-1,-2],
+        labels = ['Hot','Warm','Just right','Cool','Cold'],
+        lines=[],
+        food="",
+        from, to;
 
-	for (var i = 0; i < grades.length; i++) {
-		lines.push('<i style="background:' + getColor(grades[i]) + '"></i> ' + labels[i]);
-	}
-	
-	lines.push('');
-	lines.push("<span style='display:block !important; width: 73px; text-align: center; font-size: 15px;'>Pasadena <br><a href='http://www.wunderground.com/cgi-bin/findweather/getForecast?query=Pasadena, CA' title='Pasadena, CA Weather Forecast'><img src='http://weathersticker.wunderground.com/weathersticker/smalltemp/language/english/US/CA/Pasadena.gif' alt='Find more about Weather in Pasadena, CA' /></a><br></span>")
+    for (var i = 0; i < grades.length; i++) {
+        lines.push('<i style="background:' + getColor(grades[i]) + '"></i> ' + labels[i]+ ' ' + food);
+    }
+    
+    lines.push('');
+    lines.push("<span style='display:block !important; width: 73px; text-align: center; font-size: 15px;'>Pasadena <br><a href='http://www.wunderground.com/cgi-bin/findweather/getForecast?query=Pasadena, CA' title='Pasadena, CA Weather Forecast'><img src='http://weathersticker.wunderground.com/weathersticker/smalltemp/language/english/US/CA/Pasadena.gif' alt='Find more about Weather in Pasadena, CA' /></a><br></span>")
 
-	div.innerHTML = lines.join('<br>');
-	return div;
+    div.innerHTML = lines.join('<br>');
+    return div;
 };
 
 //########################## LOGO ###############################
