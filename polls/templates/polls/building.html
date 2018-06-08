@@ -77,7 +77,7 @@ var chart = d3.select(".chart")
 
 var bar = chart.selectAll("g")
     .data(data)
-  .enter().append("g")
+    .enter().append("g")
     .attr("transform", function(d, i) { return "translate(0," + i * barHeight + ")"; })
 
 bar.append("rect")

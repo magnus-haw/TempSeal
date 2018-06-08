@@ -17,11 +17,31 @@ function getColor(d) {
 
 //#################### POPUP CONTENT #########################
 function onEachFeature(feature, layer) {
-                        var props = feature.properties;
-                        var str = props.name.replace(/\s/g, "_");
-                        var content = `<a href="${str}/"><h3>${props.name}</h3></a> <button class="btn btn-info btn-lg" type="button" data-toggle="modal" data-target="#temp-form" data-whatever="${feature.id}">Submit Temp Feedback</button>`;
-                        layer.bindPopup(content);
-                    }
+  var props = feature.properties;
+  var blen = 200;
+  var str = props.name.replace(/\s/g, "_");
+  var content = `<a href="${str}/"><h3>${props.name}</h3></a>`;
+  content+= `<svg class="chart" width="300" height="105">`;
+  var hot = props.hotvotes;
+  var warm= props.warmvotes;
+  var ok  = props.okvotes;
+  var cool= props.coolvotes;
+  var cold= props.coldvotes;
+  var total = hot+warm+ok+cool+cold;
+  
+  content  += `<g transform="translate(0,0)"><text x="0" y="10" dy=".35em">Hot:</text><text x="60" y="10" dy=".35em" text-anchor="end">${hot}</text>`;
+  content  += `<rect x="65" width="${blen*hot/total+1}" height="19" style="fill: rgb(236, 90, 41);"></rect></g>`;
+  content  += `<g transform="translate(0,20)"><text  x="0" y="10" dy=".35em">Warm:</text><text  x="60" y="10" dy=".35em" text-anchor="end">${warm}</text>`;
+  content  += `<rect x="65" width="${blen*warm/total+1}" height="19" style="fill: rgb(239, 142, 39);"></rect></g>`;
+  content  += `<g transform="translate(0,40)"><text x="0" y="10" dy=".35em">Alright:</text><text x="60" y="10" dy=".35em" text-anchor="end">${ok}</text>`;
+  content  += `<rect x="65" width="${blen*ok/total+1}" height="19" style="fill: rgb(148,188,70);"></rect></g>`;
+  content  += `<g transform="translate(0,60)"><text x="0" y="10" dy=".35em">Cool:</text><text x="60" y="10" dy=".35em" text-anchor="end">${cool}</text>`;
+  content  += `<rect x="65" width="${blen*cool/total+1}" height="19" style="fill: rgb(95,200,232);"></rect></g>`;
+  content  += `<g transform="translate(0,80)"><text x="0" y="10" dy=".35em">Cold:</text><text x="60" y="10" dy=".35em" text-anchor="end">${cold}</text>`;
+  content  += `<rect x="65" width="${blen*cold/total+1}" height="19" style="fill: rgb(16,120,142);"></rect></g></svg>`;
+  content+= `<button class="btn btn-info btn-md" type="button" data-toggle="modal" data-target="#temp-form" data-whatever="${feature.id}">Submit Temp Feedback</button>`;
+  layer.bindPopup(content);
+}
 
 //##################### MARKER PROPERTIES ######################
 function pointToLayer(feature, latlng) {
@@ -35,10 +55,6 @@ function pointToLayer(feature, latlng) {
             opacity: 0,
             fillOpacity: 0.9
     });
-}
-
-function weather(o){
-document.getElementById("weather").innerHTML= (o.main.temp-273.15).toFixed(2) +'C'
 }
 
 //##################### LEGEND #################################
@@ -63,20 +79,31 @@ legend.onAdd = function (map) {
     return div;
 };
 
+//######################### TITLE ###############################
+var mytitle = L.control({position:"topleft"});
+    mytitle.onAdd = function(map){
+        var div = L.DomUtil.create('div','info legend');
+        var content = `<button class="btn btn-info btn-lg" type="button" data-toggle="modal" data-target="#temp-form">Submit Temp Feedback</button>`
+        div.innerHTML = content;
+        return div;
+    };
+
 //########################## LOGO ###############################
 var logo = L.control({position: 'bottomright'});
     logo.onAdd = function(map){
         var div = L.DomUtil.create('div', 'myclass');
         div.innerHTML= "<a href='http://tsf.caltech.edu'> <img src='/static/polls/images/logo.png' height='70'> </a>";
         return div;
-    }
+    };
 
 //################### ADD ALL FEATURES TO MAP ###################
 //Add points for each building
 window.addEventListener("map:init", function (event) {
     var map = event.detail.map;
+    map.zoomControl.remove();
     legend.addTo(map);
     logo.addTo(map);
+    mytitle.addTo(map);
     map.options.maxZoom = 18;
     map.options.minZoom = 16;
     // Download GeoJSON data with Ajax
@@ -86,7 +113,7 @@ window.addEventListener("map:init", function (event) {
     
         L.geoJson(data, {  
             onEachFeature: onEachFeature, //popup for each point
-            pointToLayer: pointToLayer //point properties (e.g. colo)
+            pointToLayer: pointToLayer //point properties (e.g. color)
         }).addTo(map);
         
     });
@@ -97,7 +124,6 @@ $(document).ready(function(){
   $('#temp-form').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget); // Button that triggered the modal
     var building = button.data('whatever'); // Extract info from data-* attributes
-    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
     // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
     var modal = $(this);
     modal.find('#id_building').val(building);

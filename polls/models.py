@@ -30,10 +30,20 @@ class Building(models.Model):
     geom = PointField() 
     temp = models.FloatField(default=JUSTRIGHT)
     food = ""
+    hotvotes = models.PositiveIntegerField(default=0)
+    warmvotes = models.PositiveIntegerField(default=0)
+    okvotes = models.PositiveIntegerField(default=0)
+    coolvotes= models.PositiveIntegerField(default=0)
+    coldvotes= models.PositiveIntegerField(default=0)
 
     def avg_temp(self):
         "get average from SingleResponses"
         q=SingleResponse.objects.filter(building__name = self.name)
+        self.hotvotes = q.filter(temp=HOT).count()
+        self.warmvotes = q.filter(temp=WARM).count()
+        self.okvotes = q.filter(temp=JUSTRIGHT).count()
+        self.coolvotes = q.filter(temp=COOL).count()
+        self.coldvotes = q.filter(temp=COLD).count()
         average_temp = q.aggregate(Avg('temp'))['temp__avg']
         if average_temp != None:
             self.temp = int(average_temp)
