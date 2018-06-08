@@ -150,6 +150,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 LEAFLET_CONFIG = {
     'SPATIAL_EXTENT': (-118.1294, 34.1323, -118.11967, 34.141760),
-    'RESET_VIEW': False
+    'RESET_VIEW': False,
+    'SCALE': None
 }
 

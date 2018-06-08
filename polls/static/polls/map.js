@@ -39,7 +39,7 @@ function onEachFeature(feature, layer) {
   content  += `<rect x="65" width="${blen*cool/total+1}" height="19" style="fill: rgb(95,200,232);"></rect></g>`;
   content  += `<g transform="translate(0,80)"><text x="0" y="10" dy=".35em">Cold:</text><text x="60" y="10" dy=".35em" text-anchor="end">${cold}</text>`;
   content  += `<rect x="65" width="${blen*cold/total+1}" height="19" style="fill: rgb(16,120,142);"></rect></g></svg>`;
-  content+= `<button class="btn btn-info btn-md" type="button" data-toggle="modal" data-target="#temp-form" data-whatever="${feature.id}">Submit Temp Feedback</button>`;
+  content+= `<button class="btn btn-info btn-sm" type="button" data-toggle="modal" data-target="#temp-form" data-whatever="${feature.id}">Submit Temp Feedback</button>`;
   layer.bindPopup(content);
 }
 
@@ -80,7 +80,7 @@ legend.onAdd = function (map) {
 };
 
 //######################### TITLE ###############################
-var mytitle = L.control({position:"topleft"});
+var mytitle = L.control({position:"bottomleft"});
     mytitle.onAdd = function(map){
         var div = L.DomUtil.create('div','info legend');
         var content = `<button class="btn btn-info btn-lg" type="button" data-toggle="modal" data-target="#temp-form">Submit Temp Feedback</button>`
