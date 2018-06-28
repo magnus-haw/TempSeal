@@ -1,4 +1,5 @@
 var dataurl = 'data.geojson';
+var foodurl = 'food.geojson';
 
 var HOT= "#ec5a29";
 var WARM = "#ef8e27";
@@ -16,7 +17,7 @@ function getColor(d) {
     }
 
 //#################### POPUP CONTENT #########################
-function onEachFeature(feature, layer) {
+function buildingFeature(feature, layer) {
   var props = feature.properties;
   var blen = 200;
   var str = props.name.replace(/\s/g, "_");
@@ -43,8 +44,15 @@ function onEachFeature(feature, layer) {
   layer.bindPopup(content);
 }
 
+function foodFeature(feature, layer) {
+  var props = feature.properties;
+  var content = props.food;
+  layer.bindPopup(content);
+}
+
+
 //##################### MARKER PROPERTIES ######################
-function pointToLayer(feature, latlng) {
+function buildingPoint(feature, latlng) {
     var props = feature.properties;
     var mycolor = getColor(props.temp);
     return L.circleMarker(latlng, {
@@ -56,6 +64,21 @@ function pointToLayer(feature, latlng) {
             fillOpacity: 0.9
     });
 }
+
+var PizzaIcon = L.icon({
+              iconUrl: '/static/polls/images/pizza.png',
+              //shadowUrl: 'images/leaf-shadow.png',
+              iconSize: new L.Point(25, 25),
+              //shadowSize: new L.Point(68, 95),
+              iconAnchor: new L.Point(12, 12),
+              //popupAnchor: new L.Point(-3, -76)
+});
+
+function foodMarker(feature, latlng) {
+    var props = feature.properties;
+    return L.marker(latlng, {icon: PizzaIcon});
+}
+
 
 //##################### LEGEND #################################
 var legend = L.control({position: 'topright'});
@@ -79,11 +102,19 @@ legend.onAdd = function (map) {
     return div;
 };
 
-//######################### TITLE ###############################
-var mytitle = L.control({position:"bottomleft"});
-    mytitle.onAdd = function(map){
+//######################### Buttons ###############################
+var tempbutton = L.control({position:"bottomleft"});
+    tempbutton.onAdd = function(map){
         var div = L.DomUtil.create('div','info legend');
-        var content = `<button class="btn btn-info btn-lg" type="button" data-toggle="modal" data-target="#temp-form">Submit Temp Feedback</button>`
+        var content = `<button class="btn btn-info btn-lg" type="button" data-toggle="modal" data-target="#temp-form"><img src='/static/polls/images/thermometer.png' width='30'></button>`
+        div.innerHTML = content;
+        return div;
+    };
+
+var foodbutton = L.control({position:"bottomleft"});
+    foodbutton.onAdd = function(map){
+        var div = L.DomUtil.create('div','info legend');
+        var content = `<button class="btn btn-info btn-lg" type="button" data-toggle="modal" data-target="#food-form"><img src='/static/polls/images/pizza.png' width='30'></button>`
         div.innerHTML = content;
         return div;
     };
@@ -103,7 +134,8 @@ window.addEventListener("map:init", function (event) {
     map.zoomControl.remove();
     legend.addTo(map);
     logo.addTo(map);
-    mytitle.addTo(map);
+    tempbutton.addTo(map);
+    foodbutton.addTo(map);
     map.options.maxZoom = 18;
     map.options.minZoom = 16;
     // Download GeoJSON data with Ajax
@@ -111,12 +143,28 @@ window.addEventListener("map:init", function (event) {
         return resp.json();
     }).then(function(data) {
     
-        L.geoJson(data, {  
-            onEachFeature: onEachFeature, //popup for each point
-            pointToLayer: pointToLayer //point properties (e.g. color)
-        }).addTo(map);
-        
+        var buildingLayer = L.layerGroup([L.geoJson(data, {  
+            onEachFeature: buildingFeature, //popup for each point
+            pointToLayer: buildingPoint //point properties (e.g. color)
+        })] ).addTo(map);
     });
+
+    fetch(foodurl).then(function(resp) {
+        return resp.json();
+    }).then(function(data) {
+    
+        var foodLayer = L.layerGroup([L.geoJson(data, {                                                  
+            onEachFeature: foodFeature, //popup for each point
+	    pointToLayer: foodMarker //point properties (e.g. color)
+        })] );
+
+        var overlayMaps = {"Food":foodLayer};
+        L.control.layers(null, overlayMaps).addTo(map);
+    });
+
+    //var baseMaps= {};
+    //var overlayMaps = {"Temp": buildingLayer,"Food":foodLayer};
+    //L.control.layers(null, overlayMaps).addTo(map);
 });
 
 
@@ -129,3 +177,4 @@ $(document).ready(function(){
     modal.find('#id_building').val(building);
   })
 });
+

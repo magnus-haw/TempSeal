@@ -2,14 +2,15 @@ from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse,HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
-
+from datetime import timedelta,datetime
 from .models import Building, SingleResponse
 from .forms import ResponseForm, FoodForm
 
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
     context_object_name = 'latest_question_list'
-    form = ResponseForm() 
+    form = ResponseForm()
+    fform= FoodForm()
 
     def get_queryset(self):
         """Return the last five published questions."""
@@ -18,10 +19,8 @@ class IndexView(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs) # get the default context data
         context['form'] = self.form
+        context['fform']= self.fform
         return context
-##
-##def thanks(request):
-##    return HttpResponse("Thanks!")
 
 def post_new(request):
     if request.method == "POST":
@@ -31,8 +30,8 @@ def post_new(request):
         if form.is_valid():
             # process the data in form.cleaned_data as required
             post = form.save()
-            bname = form.cleaned_data['building']
-            bname.avg_temp()
+            building = form.cleaned_data['building']
+            building.avg_temp()
             # redirect to a new URL:
             return HttpResponseRedirect('/')
     else:
@@ -46,14 +45,15 @@ def post_new_food(request):
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
-            post = form.save()
-            bname = form.cleaned_data['building']
-            bname.food()
+            obj = form.save(commit=False)
+            building = form.cleaned_data['building']
+            obj.geom = building.geom
+            obj.save()
             # redirect to a new URL:
             return HttpResponseRedirect('/')
     else:
         form = FoodForm()
-    return render(request, 'polls/form.html', {'form': form})
+    return render(request, 'polls/food.html', {'form': form})
 
 def plot_building(request,building_name):
     building_name = building_name.replace('_',' ')

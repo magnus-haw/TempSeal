@@ -11,7 +11,7 @@
         <div class="modal-body" style="padding:40px 50px;">
             <form action="{% url 'post_new_food' %}" method="post" accept-charset="utf-8">
                 {% csrf_token %}
-                {{ form.as_p }}
+                {{ fform.as_p }}
 
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>

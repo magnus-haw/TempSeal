@@ -29,7 +29,6 @@ class Building(models.Model):
     longitude = models.FloatField()
     geom = PointField() 
     temp = models.FloatField(default=JUSTRIGHT)
-    food = ""
     hotvotes = models.PositiveIntegerField(default=0)
     warmvotes = models.PositiveIntegerField(default=0)
     okvotes = models.PositiveIntegerField(default=0)
@@ -50,18 +49,6 @@ class Building(models.Model):
             self.save()
         return average_temp
     
-    def food(self):
-        q = foodResponse.objects.filter(building__name = self.name)
-        now = datetime.datetime.now()
-
-        if q.endTime < now: #future before past
-            self.food = q.food
-        else:
-            self.food = ""
-        self.save()
-
-        return food
-
     def __str__(self):
         return self.name
 
@@ -79,7 +66,6 @@ class SingleResponse(models.Model):
 class foodResponse(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     student_ID= models.CharField(max_length=12)
+    geom = PointField()
     building = models.ForeignKey(Building, on_delete=models.CASCADE)
-    room = models.PositiveIntegerField()   
-    food = models.CharField(max_length=50)
-    endTime = models.TimeField() 
+    food = models.TextField(blank=True, null=True)
